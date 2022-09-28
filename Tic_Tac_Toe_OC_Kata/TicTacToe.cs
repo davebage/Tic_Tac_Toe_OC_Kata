@@ -6,18 +6,11 @@ public class TicTacToe
 
     public bool? PlaceToken(string token)
     {
-        if(token == "X" && _lastPlacedToken == "X") return false;
+        if (_lastPlacedToken == String.Empty && token == "O") return false;
 
-        if (token == "O" && _lastPlacedToken == "X")
-        {
-            _lastPlacedToken = "O";
-            return true;
-        }
-
-        if (token == "O") return false;
+        if (token == _lastPlacedToken) return false;
 
         _lastPlacedToken = token;
-
         return true;
     }
 }
