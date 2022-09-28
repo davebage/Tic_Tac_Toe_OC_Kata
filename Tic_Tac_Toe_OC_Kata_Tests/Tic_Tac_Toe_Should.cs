@@ -47,5 +47,11 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
             _ticTacToe.PlaceToken("O");
             Assert.IsFalse(_ticTacToe.PlaceToken("O"));
         }
+
+        [Test]
+        public void Not_Allow_Invalid_Token_Value()
+        {
+            Assert.IsFalse(_ticTacToe.PlaceToken("Z"));
+        }
     }
 }
