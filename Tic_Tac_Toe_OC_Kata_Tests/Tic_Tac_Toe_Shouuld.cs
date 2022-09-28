@@ -27,5 +27,13 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
             ticTacToe.PlaceToken("X");
             Assert.IsTrue(ticTacToe.PlaceToken("O"));
         }
+
+        [Test]
+        public void Not_Allow_X_Twice_In_A_Row()
+        {
+            TicTacToe ticTacToe = new TicTacToe();
+            ticTacToe.PlaceToken("X");
+            Assert.IsFalse(ticTacToe.PlaceToken("X"));
+        }
     }
 }
