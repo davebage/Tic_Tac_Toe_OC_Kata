@@ -17,41 +17,45 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Allow_X_To_Go_First()
         {
-            Assert.IsTrue(_ticTacToe.PlaceToken("X"));
+            var result = _ticTacToe.PlaceToken(BoardToken.X);
+            Assert.IsTrue(result.Successful);
         }
 
         [Test]
         public void Not_Allow_O_To_Go_First()
         {
-            Assert.IsFalse(_ticTacToe.PlaceToken("O"));
+            var result = _ticTacToe.PlaceToken(BoardToken.O);
+
+            Assert.IsFalse(result.Successful);
         }
 
         [Test]
         public void Allow_O_To_Be_Placed_After_X()
         {
-            _ticTacToe.PlaceToken("X");
-            Assert.IsTrue(_ticTacToe.PlaceToken("O"));
+            _ticTacToe.PlaceToken(BoardToken.X);
+            var result = _ticTacToe.PlaceToken(BoardToken.O);
+
+            Assert.IsTrue(result.Successful);
         }
 
         [Test]
         public void Not_Allow_X_Twice_In_A_Row()
         {
-            _ticTacToe.PlaceToken("X");
-            Assert.IsFalse(_ticTacToe.PlaceToken("X"));
+            _ticTacToe.PlaceToken(BoardToken.X);
+            var result = _ticTacToe.PlaceToken(BoardToken.X);
+
+            Assert.IsFalse(result.Successful);
         }
 
         [Test]
         public void Not_Allow_O_Twice_In_A_Row()
         {
-            _ticTacToe.PlaceToken("X");
-            _ticTacToe.PlaceToken("O");
-            Assert.IsFalse(_ticTacToe.PlaceToken("O"));
-        }
+            _ticTacToe.PlaceToken(BoardToken.X);
+            _ticTacToe.PlaceToken(BoardToken.O);
 
-        [Test]
-        public void Not_Allow_Invalid_Token_Value()
-        {
-            Assert.IsFalse(_ticTacToe.PlaceToken("Z"));
+            var result = _ticTacToe.PlaceToken(BoardToken.O);
+
+            Assert.IsFalse(result.Successful);
         }
     }
 }

@@ -2,16 +2,26 @@
 
 public class TicTacToe
 {
-    private string _lastPlacedToken = string.Empty;
+    private BoardToken? _lastPlacedToken;
 
-    public bool? PlaceToken(string token)
+    public PlaceTokenResult PlaceToken(BoardToken boardToken)
     {
-        if (token != "X" && token != "O") return false;
-        if (_lastPlacedToken == String.Empty && token == "O") return false;
+        var placeTokenResult = ValidateMove(boardToken);
+        
+        if (!placeTokenResult.Successful) return placeTokenResult;
 
-        if (token == _lastPlacedToken) return false;
+        _lastPlacedToken = boardToken;
 
-        _lastPlacedToken = token;
-        return true;
+        return placeTokenResult;
+    }
+
+    private PlaceTokenResult ValidateMove(BoardToken boardToken)
+    {
+        var placeTokenResult = new PlaceTokenResult();
+
+        if (!_lastPlacedToken.HasValue && boardToken == BoardToken.O || boardToken == _lastPlacedToken)
+            placeTokenResult.Successful = false;
+
+        return placeTokenResult;
     }
 }
