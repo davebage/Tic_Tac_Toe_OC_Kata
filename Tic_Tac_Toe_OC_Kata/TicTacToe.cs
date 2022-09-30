@@ -2,18 +2,24 @@
 
 public class TicTacToe
 {
-    private BoardToken _lastPlacedToken = BoardToken.O;
+    private readonly List<Move> _moves = new List<Move>();
 
     public PlaceTokenResult PlaceToken(Move move)
     {
         var placeTokenResult = new PlaceTokenResult();
 
-        if (move.CompareToken(_lastPlacedToken))
+        if(!_moves.Any() && move.CompareToken(BoardToken.O))
             placeTokenResult.Successful = false;
-        
+
+        if (_moves.Any() && move.CompareToken(_moves.Last()))
+            placeTokenResult.Successful = false;
+
+        if(_moves.Any(x => x.CompareCoordinates(move)))
+            placeTokenResult.Successful = false;
+
         if (!placeTokenResult.Successful) return placeTokenResult;
 
-        _lastPlacedToken = move.GetToken();
+        _moves.Add(move);
 
         return placeTokenResult;
     }

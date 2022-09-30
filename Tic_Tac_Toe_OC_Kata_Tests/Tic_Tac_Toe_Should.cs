@@ -57,5 +57,17 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
 
             Assert.IsFalse(result.Successful);
         }
+
+        [Test]
+        public void Not_Allow_O_To_Play_On_Played_Position()
+        {
+            _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
+
+            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0)));
+
+            Assert.IsFalse(result.Successful);
+        }
     }
+
+
 }
