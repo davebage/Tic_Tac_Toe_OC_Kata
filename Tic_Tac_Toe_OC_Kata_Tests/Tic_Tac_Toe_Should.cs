@@ -17,14 +17,14 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Allow_X_To_Go_First()
         {
-            var result = _ticTacToe.PlaceToken(BoardToken.X);
+            var result = _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.X });
             Assert.IsTrue(result.Successful);
         }
 
         [Test]
         public void Not_Allow_O_To_Go_First()
         {
-            var result = _ticTacToe.PlaceToken(BoardToken.O);
+            var result = _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.O });
 
             Assert.IsFalse(result.Successful);
         }
@@ -32,8 +32,8 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Allow_O_To_Be_Placed_After_X()
         {
-            _ticTacToe.PlaceToken(BoardToken.X);
-            var result = _ticTacToe.PlaceToken(BoardToken.O);
+            _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.X });
+            var result = _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.O });
 
             Assert.IsTrue(result.Successful);
         }
@@ -41,8 +41,8 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Not_Allow_X_Twice_In_A_Row()
         {
-            _ticTacToe.PlaceToken(BoardToken.X);
-            var result = _ticTacToe.PlaceToken(BoardToken.X);
+            _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.X });
+            var result = _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.X });
 
             Assert.IsFalse(result.Successful);
         }
@@ -50,10 +50,10 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Not_Allow_O_Twice_In_A_Row()
         {
-            _ticTacToe.PlaceToken(BoardToken.X);
-            _ticTacToe.PlaceToken(BoardToken.O);
+            _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.X });
+            _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.O });
 
-            var result = _ticTacToe.PlaceToken(BoardToken.O);
+            var result = _ticTacToe.PlaceToken(new Move { boardToken = BoardToken.O });
 
             Assert.IsFalse(result.Successful);
         }
