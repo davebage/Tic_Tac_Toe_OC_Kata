@@ -6,21 +6,14 @@ public class TicTacToe
 
     public PlaceTokenResult PlaceToken(BoardToken boardToken)
     {
-        var placeTokenResult = ValidateMove(boardToken);
-        
-        if (!placeTokenResult.Successful) return placeTokenResult;
-
-        _lastPlacedToken = boardToken;
-
-        return placeTokenResult;
-    }
-
-    private PlaceTokenResult ValidateMove(BoardToken boardToken)
-    {
         var placeTokenResult = new PlaceTokenResult();
 
         if (!_lastPlacedToken.HasValue && boardToken == BoardToken.O || boardToken == _lastPlacedToken)
             placeTokenResult.Successful = false;
+        
+        if (!placeTokenResult.Successful) return placeTokenResult;
+
+        _lastPlacedToken = boardToken;
 
         return placeTokenResult;
     }
