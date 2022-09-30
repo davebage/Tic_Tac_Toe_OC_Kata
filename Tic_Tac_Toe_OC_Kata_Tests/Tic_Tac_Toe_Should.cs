@@ -18,7 +18,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         public void Allow_X_To_Go_First()
         {
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
-            Assert.IsTrue(result.Successful);
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.Success));
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         {
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0)));
 
-            Assert.IsFalse(result.Successful);
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
             _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1)));
 
-            Assert.IsTrue(result.Successful);
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.Success));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
             _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1)));
 
-            Assert.IsFalse(result.Successful);
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
 
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2)));
 
-            Assert.IsFalse(result.Successful);
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
 
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0)));
 
-            Assert.IsFalse(result.Successful);
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
         }
     }
 

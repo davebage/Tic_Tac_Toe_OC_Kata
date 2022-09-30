@@ -6,21 +6,17 @@ public class TicTacToe
 
     public PlaceTokenResult PlaceToken(Move move)
     {
-        var placeTokenResult = new PlaceTokenResult();
-
-        if(!_moves.Any() && move.CompareToken(BoardToken.O))
-            placeTokenResult.Successful = false;
+        if (!_moves.Any() && move.CompareToken(BoardToken.O))
+            return PlaceTokenResult.Failure;
 
         if (_moves.Any() && move.CompareToken(_moves.Last()))
-            placeTokenResult.Successful = false;
+            return PlaceTokenResult.Failure;
 
-        if(_moves.Any(x => x.CompareCoordinates(move)))
-            placeTokenResult.Successful = false;
-
-        if (!placeTokenResult.Successful) return placeTokenResult;
+        if (_moves.Any(x => x.CompareCoordinates(move)))
+            return PlaceTokenResult.Failure;
 
         _moves.Add(move);
 
-        return placeTokenResult;
+        return PlaceTokenResult.Success;
     }
 }
