@@ -17,6 +17,11 @@ public class TicTacToe
 
         _moves.Add(move);
 
+        if(_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 0)))) &&
+           _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 0)))) &&
+           _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(2, 0)))))
+            return PlaceTokenResult.GameWon;
+
         return PlaceTokenResult.Success;
     }
 }

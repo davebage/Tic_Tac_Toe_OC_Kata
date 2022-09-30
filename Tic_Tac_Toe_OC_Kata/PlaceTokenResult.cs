@@ -3,5 +3,6 @@
 public enum PlaceTokenResult
 {
     Success,
-    Failure
+    Failure,
+    GameWon
 }
