@@ -32,7 +32,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Allow_O_To_Be_Placed_After_X()
         {
-            _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1)));
 
             Assert.That(result, Is.EqualTo(PlaceTokenResult.Success));
@@ -41,7 +41,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Not_Allow_X_Twice_In_A_Row()
         {
-            _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1)));
 
             Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
@@ -50,8 +50,8 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Not_Allow_O_Twice_In_A_Row()
         {
-            _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
-            _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1)));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
 
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2)));
 
@@ -61,7 +61,7 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Not_Allow_O_To_Play_On_Played_Position()
         {
-            _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
 
             var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0)));
 
