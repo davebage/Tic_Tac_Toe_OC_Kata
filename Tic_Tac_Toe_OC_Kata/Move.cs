@@ -10,16 +10,19 @@ public class Move
     {
         _boardToken = boardToken;
         _coordinate = coordinate;
-
     }
 
-    public bool CompareToken(BoardToken other)
+    public bool CompareCoordinates(Move move)
     {
-        return other == _boardToken;
+        return _coordinate.Equals(move._coordinate);
     }
 
-    public BoardToken GetToken()
+    public bool CompareToken(BoardToken token)
     {
-        return _boardToken;
+        return token == _boardToken;
+    }
+    public bool CompareToken(Move move)
+    {
+        return move._boardToken == _boardToken;
     }
 }
