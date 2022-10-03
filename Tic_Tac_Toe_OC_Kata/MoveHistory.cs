@@ -25,6 +25,11 @@ public class MoveHistory
             _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(2, 2)))))
             return PlaceTokenResult.GameWon;
 
+        if (_moves.Any(x => x.Equals(new Move(BoardToken.O, new Coordinate(0, 0)))) &&
+            _moves.Any(x => x.Equals(new Move(BoardToken.O, new Coordinate(1, 1)))) &&
+            _moves.Any(x => x.Equals(new Move(BoardToken.O, new Coordinate(2, 2)))))
+            return PlaceTokenResult.GameWon;
+
 
         return PlaceTokenResult.Success;
 
