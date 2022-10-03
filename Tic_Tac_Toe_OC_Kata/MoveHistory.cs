@@ -19,7 +19,12 @@ public class MoveHistory
 
         if (IsHorizontalWin(move) == GameWonStatus.GameWon) return PlaceTokenResult.GameWon;
 
-        return PlaceTokenResult.Success;
+        if (_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 0)))) &&
+            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 1)))) &&
+            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 2)))))
+
+
+            return PlaceTokenResult.Success;
 
     }
 

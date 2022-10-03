@@ -144,6 +144,19 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
             Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
+
+        [Test]
+        public void Check_X_Won_Along_Left_Column_After_Three_Plays()
+        {
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
+            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 2)));
+            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+        }
+
+
     }
 
 
