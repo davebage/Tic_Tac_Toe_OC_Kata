@@ -18,21 +18,7 @@ public class MoveHistory
         _moves.Add(move);
 
         if (IsHorizontalWin(move) == GameWonStatus.GameWon) return PlaceTokenResult.GameWon;
-
-        if (_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 0)))) &&
-            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 1)))) &&
-            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 2)))))
-            return PlaceTokenResult.GameWon;
-
-        if (_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 0)))) &&
-            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 1)))) &&
-            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 2)))))
-            return PlaceTokenResult.GameWon;
-
-        if (_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(2, 0)))) &&
-            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(2, 1)))) &&
-            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(2, 2)))))
-            return PlaceTokenResult.GameWon;
+        if (IsVerticalWin(move) == GameWonStatus.GameWon) return PlaceTokenResult.GameWon;
 
         return PlaceTokenResult.Success;
 
@@ -52,4 +38,20 @@ public class MoveHistory
 
         return GameWonStatus.GameNotWon;
     }
+
+    private GameWonStatus IsVerticalWin(Move move)
+    {
+        BoardToken token = move.CompareToken(BoardToken.O) ? BoardToken.O : BoardToken.X;
+
+        for (int columnIndex = 0; columnIndex < 3; columnIndex++)
+        {
+            if (_moves.Any(x => x.Equals(new Move(token, new Coordinate(columnIndex, 0)))) &&
+                _moves.Any(x => x.Equals(new Move(token, new Coordinate(columnIndex, 1)))) &&
+                _moves.Any(x => x.Equals(new Move(token, new Coordinate(columnIndex, 2)))))
+                return GameWonStatus.GameWon;
+        }
+
+        return GameWonStatus.GameNotWon;
+    }
+
 }
