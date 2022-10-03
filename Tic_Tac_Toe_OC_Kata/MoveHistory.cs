@@ -22,9 +22,14 @@ public class MoveHistory
         if (_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 0)))) &&
             _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 1)))) &&
             _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(0, 2)))))
+            return PlaceTokenResult.GameWon;
 
+        if (_moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 0)))) &&
+            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 1)))) &&
+            _moves.Any(x => x.Equals(new Move(BoardToken.X, new Coordinate(1, 2)))))
+            return PlaceTokenResult.GameWon;
 
-            return PlaceTokenResult.Success;
+        return PlaceTokenResult.Success;
 
     }
 
