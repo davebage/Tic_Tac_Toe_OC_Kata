@@ -28,14 +28,14 @@ public class MoveHistory
     {
         BoardToken token = move.CompareToken(BoardToken.O) ? BoardToken.O : BoardToken.X;
 
-        if (IsHorizontalWin(token, move) == GameWonStatus.GameWon) return IsHorizontalWin(token, move);
-        if (IsVerticalWin(token, move) == GameWonStatus.GameWon) return IsVerticalWin(token, move);
-        if (IsDiagonalWin(token, move) == GameWonStatus.GameWon) return IsDiagonalWin(token, move);
+        if (IsHorizontalWin(token) == GameWonStatus.GameWon) return IsHorizontalWin(token);
+        if (IsVerticalWin(token) == GameWonStatus.GameWon) return IsVerticalWin(token);
+        if (IsDiagonalWin(token) == GameWonStatus.GameWon) return IsDiagonalWin(token);
 
         return GameWonStatus.GameNotWon;
     }
 
-    private GameWonStatus IsDiagonalWin(BoardToken token, Move move)
+    private GameWonStatus IsDiagonalWin(BoardToken token)
     {
         if (_moves.Any(x => x.Equals(new Move(token, new Coordinate(0, 0)))) &&
             _moves.Any(x => x.Equals(new Move(token, new Coordinate(1, 1)))) &&
@@ -50,7 +50,7 @@ public class MoveHistory
         return GameWonStatus.GameNotWon;
     }
 
-    private GameWonStatus IsHorizontalWin(BoardToken token, Move move)
+    private GameWonStatus IsHorizontalWin(BoardToken token)
     {
         for (int rowIndex = 0; rowIndex < 3; rowIndex++)
         {
@@ -63,7 +63,7 @@ public class MoveHistory
         return GameWonStatus.GameNotWon;
     }
 
-    private GameWonStatus IsVerticalWin(BoardToken token, Move move)
+    private GameWonStatus IsVerticalWin(BoardToken token)
     {
         for (int columnIndex = 0; columnIndex < 3; columnIndex++)
         {
