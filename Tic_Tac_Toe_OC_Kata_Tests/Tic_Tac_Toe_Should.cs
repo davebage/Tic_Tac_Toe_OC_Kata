@@ -17,254 +17,254 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
         [Test]
         public void Allow_X_To_Go_First()
         {
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
         }
 
         [Test]
         public void Not_Allow_O_To_Go_First()
         {
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0)));
-
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
         public void Allow_O_To_Be_Placed_After_X()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1)));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
 
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
         }
 
         [Test]
         public void Not_Allow_X_Twice_In_A_Row()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1)));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
 
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
         public void Not_Allow_O_Twice_In_A_Row()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
 
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2)));
 
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
         public void Not_Allow_O_To_Play_On_Played_Position()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
 
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0)));
-
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.Failure));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Failure));
         }
 
         [Test]
         public void Check_X_Won_Along_Bottom_Row_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 0)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_X_Won_Along_Middle_Row_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 1)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_X_Won_Along_Top_Row_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
 
         [Test]
         public void Check_O_Won_Along_Bottom_Row_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
 
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 3))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 0)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_O_Won_Along_Middle_Row_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
 
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 3))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 1)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_O_Won_Along_Top_Row_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
 
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
-
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
 
         [Test]
         public void Check_X_Won_Along_Left_Column_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_X_Won_Along_Middle_Column_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_X_Won_Along_Right_Column_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 1))), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
             Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_O_Won_Along_Left_Column_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_O_Won_Along_Middle_Column_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
         public void Check_O_Won_Along_Right_Column_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
-        public void Check_X_Won_Diagnally_From_Bottom_Left_To_Top_Right_After_Three_Plays()
+        public void Check_X_Won_Diagonally_From_Bottom_Left_To_Top_Right_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
 
         [Test]
-        public void Check_O_Won_Diagnally_From_Bottom_Left_To_Top_Right_After_Three_Plays()
+        public void Check_O_Won_Diagonally_From_Bottom_Left_To_Top_Right_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 2)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
-        public void Check_X_Won_Diagnally_From_Top_Left_To_Bottom_Right_After_Three_Plays()
+        public void Check_X_Won_Diagonally_From_Top_Left_To_Bottom_Right_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(2, 0)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
         [Test]
-        public void Check_O_Won_Diagnally_From_Top_Left_To_Bottom_Right_After_Three_Plays()
+        public void Check_O_Won_Diagonally_From_Top_Left_To_Bottom_Right_After_Three_Plays()
         {
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 0))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(0, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(1, 2))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(1, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            Assert.That(_ticTacToe.PlaceToken(new Move(BoardToken.X, new Coordinate(0, 1))), Is.EqualTo(PlaceTokenResult.Success));
-            var result = _ticTacToe.PlaceToken(new Move(BoardToken.O, new Coordinate(2, 0)));
-            Assert.That(result, Is.EqualTo(PlaceTokenResult.GameWon));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Left, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Middle, BoardRow.Top)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Middle, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
+
+            Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.GameWon));
         }
 
+        private enum BoardColumn
+        {
+            Left = 0,
+            Middle = 1,
+            Right = 2
+        }
 
+        private enum BoardRow
+        {
+            Bottom = 0,
+            Middle = 1,
+            Top = 2
+        }
 
-
+        private Move CreateMove(BoardToken token, BoardColumn column, BoardRow row)
+        {
+            return new Move(token, new Coordinate((int)column, (int)row));
+        }
     }
-
-
 }
