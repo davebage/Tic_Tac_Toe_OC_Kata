@@ -25,4 +25,9 @@ public class Coordinate : IEquatable<Coordinate>
     {
         return coordinate._row == _row;
     }
+
+    public bool EqualsColumn(Coordinate coordinate)
+    {
+        return coordinate._column == _column;
+    }
 }

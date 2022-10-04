@@ -3,6 +3,7 @@
 public class MoveHistory
 {
     private readonly List<Move> _moves = new List<Move>();
+    private const int WINNING_TOKEN_AMOUNT = 3;
 
     public PlaceTokenResult AddMove(Move move)
     {
@@ -19,87 +20,43 @@ public class MoveHistory
 
         if(HasPlacedTokenWon(move) == GameWonStatus.GameWon) return PlaceTokenResult.GameWon;
 
-
         return PlaceTokenResult.Success;
-
     }
 
     private GameWonStatus HasPlacedTokenWon(Move move)
     {
-        if (_moves.Count(x => x.CompareToken(move) &&
-                              (x.CompareCoordinates(new Coordinate(0, 0)) ||
-                              x.CompareCoordinates(new Coordinate(1, 1)) ||
-                              x.CompareCoordinates(new Coordinate(2, 2)))) == 3)
-            return GameWonStatus.GameWon;
-
-
-        if (_moves.Count(x => x.CompareToken(move) &&
-                              (x.CompareCoordinates(new Coordinate(0, 2)) ||
-                              x.CompareCoordinates(new Coordinate(1, 1)) ||
-                              x.CompareCoordinates(new Coordinate(2, 0)))) == 3)
-            return GameWonStatus.GameWon;
-
         var loopCounter = 0;
-        var tokenCount = 0;
+        var isTokenMatching = true;
 
-        tokenCount = _moves.Count(x => x.CompareToken(move) && x.CompareRow(move));
-
-        if (tokenCount == 3) return GameWonStatus.GameWon;
-
-        loopCounter = 0;
-        while (loopCounter < 3 && tokenCount < 3)
+        while (loopCounter < 3 && isTokenMatching)
         {
-            tokenCount = _moves.Count(x => x.CompareToken(move) &&
-                                           (x.CompareCoordinates(new Coordinate(loopCounter, 0)) ||
-                                            x.CompareCoordinates(new Coordinate(loopCounter, 1)) ||
-                                            x.CompareCoordinates(new Coordinate(loopCounter, 2))));
+            isTokenMatching = _moves.Any(x => x.CompareToken(move) &&
+                                              x.CompareCoordinates(new Coordinate(loopCounter, loopCounter)));
             loopCounter++;
         }
 
-        if(tokenCount == 3) return GameWonStatus.GameWon;
+        if (isTokenMatching) return GameWonStatus.GameWon;
 
-        return GameWonStatus.GameNotWon;
-    }
-
-    private GameWonStatus IsDiagonalWin(BoardToken token)
-    {
-        if (_moves.Any(x => x.Equals(new Move(token, new Coordinate(0, 0)))) &&
-            _moves.Any(x => x.Equals(new Move(token, new Coordinate(1, 1)))) &&
-            _moves.Any(x => x.Equals(new Move(token, new Coordinate(2, 2)))))
-            return GameWonStatus.GameWon;
-
-        if (_moves.Any(x => x.Equals(new Move(token, new Coordinate(0, 2)))) &&
-            _moves.Any(x => x.Equals(new Move(token, new Coordinate(1, 1)))) &&
-            _moves.Any(x => x.Equals(new Move(token, new Coordinate(2, 0)))))
-            return GameWonStatus.GameWon;
-
-        return GameWonStatus.GameNotWon;
-    }
-
-    private GameWonStatus IsHorizontalWin(BoardToken token)
-    {
-        for (int rowIndex = 0; rowIndex < 3; rowIndex++)
+        loopCounter = 0;
+        isTokenMatching = true;
+        while (loopCounter < 3 && isTokenMatching)
         {
-            if(_moves.Any(x => x.Equals(new Move(token, new Coordinate(0, rowIndex)))) &&
-                    _moves.Any(x => x.Equals(new Move(token, new Coordinate(1, rowIndex)))) &&
-                    _moves.Any(x => x.Equals(new Move(token, new Coordinate(2, rowIndex)))))
-                return GameWonStatus.GameWon;
+            isTokenMatching = _moves.Any(x => x.CompareToken(move) &&
+                                              x.CompareCoordinates(new Coordinate(loopCounter, 2 - loopCounter)));
+            loopCounter++;
         }
 
-        return GameWonStatus.GameNotWon;
-    }
+        if (isTokenMatching) return GameWonStatus.GameWon;
 
-    private GameWonStatus IsVerticalWin(BoardToken token)
-    {
-        for (int columnIndex = 0; columnIndex < 3; columnIndex++)
-        {
-            if (_moves.Any(x => x.Equals(new Move(token, new Coordinate(columnIndex, 0)))) &&
-                _moves.Any(x => x.Equals(new Move(token, new Coordinate(columnIndex, 1)))) &&
-                _moves.Any(x => x.Equals(new Move(token, new Coordinate(columnIndex, 2)))))
-                return GameWonStatus.GameWon;
-        }
+
+        if (_moves.Count(x => x.CompareToken(move) && x.CompareRow(move)) == WINNING_TOKEN_AMOUNT) 
+            return GameWonStatus.GameWon;
+
+        if(_moves.Count(x => x.CompareToken(move) && x.CompareColumn(move)) == WINNING_TOKEN_AMOUNT) 
+            return GameWonStatus.GameWon;
 
         return GameWonStatus.GameNotWon;
     }
+
 
 }

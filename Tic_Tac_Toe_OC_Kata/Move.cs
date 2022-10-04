@@ -43,4 +43,9 @@ public class Move : IEquatable<Move>
         return (other._boardToken == _boardToken && 
                 other._coordinate.Equals(_coordinate));
     }
+
+    public bool CompareColumn(Move move)
+    {
+        return _coordinate.EqualsColumn(move._coordinate);
+    }
 }
