@@ -47,17 +47,18 @@ public class MoveHistory
                                                (x.CompareCoordinates(new Coordinate(0, loopCounter)) ||
                                                 x.CompareCoordinates(new Coordinate(1, loopCounter)) ||
                                                 x.CompareCoordinates(new Coordinate(2, loopCounter))));
-
             loopCounter++;
         }
+        if (tokenCount == 3) return GameWonStatus.GameWon;
 
-        for (int columnIndex = 0; columnIndex < 3; columnIndex++)
+        loopCounter = 0;
+        while (loopCounter < 3 && tokenCount < 3)
         {
-            if (_moves.Count(x => x.CompareToken(move) &&
-                                  (x.CompareCoordinates(new Coordinate(columnIndex, 0)) ||
-                                  x.CompareCoordinates(new Coordinate(columnIndex, 1)) ||
-                                  x.CompareCoordinates(new Coordinate(columnIndex, 2)))) == 3)
-                return GameWonStatus.GameWon;
+            tokenCount = _moves.Count(x => x.CompareToken(move) &&
+                                           (x.CompareCoordinates(new Coordinate(loopCounter, 0)) ||
+                                            x.CompareCoordinates(new Coordinate(loopCounter, 1)) ||
+                                            x.CompareCoordinates(new Coordinate(loopCounter, 2))));
+            loopCounter++;
         }
 
         if(tokenCount == 3) return GameWonStatus.GameWon;
