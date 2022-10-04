@@ -41,14 +41,9 @@ public class MoveHistory
 
         var loopCounter = 0;
         var tokenCount = 0;
-        while (loopCounter < 3 && tokenCount < 3)
-        {
-            tokenCount = _moves.Count(x => x.CompareToken(move) &&
-                                               (x.CompareCoordinates(new Coordinate(0, loopCounter)) ||
-                                                x.CompareCoordinates(new Coordinate(1, loopCounter)) ||
-                                                x.CompareCoordinates(new Coordinate(2, loopCounter))));
-            loopCounter++;
-        }
+
+        tokenCount = _moves.Count(x => x.CompareToken(move) && x.CompareRow(move));
+
         if (tokenCount == 3) return GameWonStatus.GameWon;
 
         loopCounter = 0;

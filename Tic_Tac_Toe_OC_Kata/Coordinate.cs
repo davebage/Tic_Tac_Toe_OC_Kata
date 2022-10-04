@@ -20,4 +20,9 @@ public class Coordinate : IEquatable<Coordinate>
         return other._column == _column && 
                other._row == _row;
     }
+
+    public bool EqualsRow(Coordinate coordinate)
+    {
+        return coordinate._row == _row;
+    }
 }
