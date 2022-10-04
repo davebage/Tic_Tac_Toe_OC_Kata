@@ -39,13 +39,16 @@ public class MoveHistory
                               x.CompareCoordinates(new Coordinate(2, 0)))) == 3)
             return GameWonStatus.GameWon;
 
-        for (int rowIndex = 0; rowIndex < 3; rowIndex++)
+        var loopCounter = 0;
+        var tokenCount = 0;
+        while (loopCounter < 3 && tokenCount < 3)
         {
-            if (_moves.Count(x => x.CompareToken(move) &&
-                                  (x.CompareCoordinates(new Coordinate(0, rowIndex)) ||
-                                  x.CompareCoordinates(new Coordinate(1, rowIndex)) ||
-                                  x.CompareCoordinates(new Coordinate(2, rowIndex)))) == 3)
-                return GameWonStatus.GameWon;
+            tokenCount = _moves.Count(x => x.CompareToken(move) &&
+                                               (x.CompareCoordinates(new Coordinate(0, loopCounter)) ||
+                                                x.CompareCoordinates(new Coordinate(1, loopCounter)) ||
+                                                x.CompareCoordinates(new Coordinate(2, loopCounter))));
+
+            loopCounter++;
         }
 
         for (int columnIndex = 0; columnIndex < 3; columnIndex++)
@@ -57,9 +60,7 @@ public class MoveHistory
                 return GameWonStatus.GameWon;
         }
 
-        //if (IsHorizontalWin(token) == GameWonStatus.GameWon) return IsHorizontalWin(token);
-        //if (IsVerticalWin(token) == GameWonStatus.GameWon) return IsVerticalWin(token);
-        //if (IsDiagonalWin(token) == GameWonStatus.GameWon) return IsDiagonalWin(token);
+        if(tokenCount == 3) return GameWonStatus.GameWon;
 
         return GameWonStatus.GameNotWon;
     }
