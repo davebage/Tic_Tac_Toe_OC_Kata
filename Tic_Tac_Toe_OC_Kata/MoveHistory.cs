@@ -26,11 +26,40 @@ public class MoveHistory
 
     private GameWonStatus HasPlacedTokenWon(Move move)
     {
-        BoardToken token = move.CompareToken(BoardToken.O) ? BoardToken.O : BoardToken.X;
+        if (_moves.Count(x => x.CompareToken(move) &&
+                              (x.CompareCoordinates(new Coordinate(0, 0)) ||
+                              x.CompareCoordinates(new Coordinate(1, 1)) ||
+                              x.CompareCoordinates(new Coordinate(2, 2)))) == 3)
+            return GameWonStatus.GameWon;
 
-        if (IsHorizontalWin(token) == GameWonStatus.GameWon) return IsHorizontalWin(token);
-        if (IsVerticalWin(token) == GameWonStatus.GameWon) return IsVerticalWin(token);
-        if (IsDiagonalWin(token) == GameWonStatus.GameWon) return IsDiagonalWin(token);
+
+        if (_moves.Count(x => x.CompareToken(move) &&
+                              (x.CompareCoordinates(new Coordinate(0, 2)) ||
+                              x.CompareCoordinates(new Coordinate(1, 1)) ||
+                              x.CompareCoordinates(new Coordinate(2, 0)))) == 3)
+            return GameWonStatus.GameWon;
+
+        for (int rowIndex = 0; rowIndex < 3; rowIndex++)
+        {
+            if (_moves.Count(x => x.CompareToken(move) &&
+                                  (x.CompareCoordinates(new Coordinate(0, rowIndex)) ||
+                                  x.CompareCoordinates(new Coordinate(1, rowIndex)) ||
+                                  x.CompareCoordinates(new Coordinate(2, rowIndex)))) == 3)
+                return GameWonStatus.GameWon;
+        }
+
+        for (int columnIndex = 0; columnIndex < 3; columnIndex++)
+        {
+            if (_moves.Count(x => x.CompareToken(move) &&
+                                  (x.CompareCoordinates(new Coordinate(columnIndex, 0)) ||
+                                  x.CompareCoordinates(new Coordinate(columnIndex, 1)) ||
+                                  x.CompareCoordinates(new Coordinate(columnIndex, 2)))) == 3)
+                return GameWonStatus.GameWon;
+        }
+
+        //if (IsHorizontalWin(token) == GameWonStatus.GameWon) return IsHorizontalWin(token);
+        //if (IsVerticalWin(token) == GameWonStatus.GameWon) return IsVerticalWin(token);
+        //if (IsDiagonalWin(token) == GameWonStatus.GameWon) return IsDiagonalWin(token);
 
         return GameWonStatus.GameNotWon;
     }

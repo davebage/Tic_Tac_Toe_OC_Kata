@@ -3,10 +3,25 @@ using Tic_Tac_Toe_OC_Kata;
 
 namespace Tic_Tac_Toe_OC_Kata_Tests
 {
+
     [TestFixture]
     public class Tic_Tac_Toe_Should
     {
         TicTacToe _ticTacToe;
+
+        private enum BoardColumn
+        {
+            Left = 0,
+            Middle = 1,
+            Right = 2
+        }
+
+        private enum BoardRow
+        {
+            Bottom = 0,
+            Middle = 1,
+            Top = 2
+        }
 
         [SetUp]
         public void SetUp()
@@ -246,20 +261,6 @@ namespace Tic_Tac_Toe_OC_Kata_Tests
             Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.X, BoardColumn.Left, BoardRow.Middle)), Is.EqualTo(PlaceTokenResult.Success));
 
             Assert.That(_ticTacToe.PlaceToken(CreateMove(BoardToken.O, BoardColumn.Right, BoardRow.Bottom)), Is.EqualTo(PlaceTokenResult.GameWon));
-        }
-
-        private enum BoardColumn
-        {
-            Left = 0,
-            Middle = 1,
-            Right = 2
-        }
-
-        private enum BoardRow
-        {
-            Bottom = 0,
-            Middle = 1,
-            Top = 2
         }
 
         private Move CreateMove(BoardToken token, BoardColumn column, BoardRow row)

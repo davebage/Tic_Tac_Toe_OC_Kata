@@ -17,6 +17,11 @@ public class Move : IEquatable<Move>
         return _coordinate.Equals(move._coordinate);
     }
 
+    public bool CompareCoordinates(Coordinate coordinate)
+    {
+        return _coordinate.Equals(coordinate);
+    }
+
     public bool CompareToken(BoardToken token)
     {
         return token == _boardToken;
