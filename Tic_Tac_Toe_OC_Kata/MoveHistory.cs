@@ -35,8 +35,10 @@ public class MoveHistory
 
         while (loopCounter < WINNING_TOKEN_COUNT)
         {
-            primaryDiagonalCount += _moves.Count(x => x.CompareToken(move) && x.CompareCoordinates(new Coordinate(loopCounter, loopCounter)));
-            secondaryDiagonalCount += _moves.Count(x => x.CompareToken(move) && x.CompareCoordinates(new Coordinate(loopCounter, (WINNING_TOKEN_COUNT -1) - loopCounter)));
+            primaryDiagonalCount += _moves.Count(x => x.CompareToken(move) && x.CompareCoordinates(new Coordinate((Column)loopCounter,
+                (Row)loopCounter)));
+            secondaryDiagonalCount += _moves.Count(x => x.CompareToken(move) && x.CompareCoordinates(new Coordinate((Column)loopCounter, 
+                (Row)(WINNING_TOKEN_COUNT - 1) - loopCounter)));
             loopCounter++;
         }
 

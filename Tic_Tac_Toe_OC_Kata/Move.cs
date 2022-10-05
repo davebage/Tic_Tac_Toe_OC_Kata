@@ -31,6 +31,7 @@ public class Move
     {
         return token == _boardToken;
     }
+
     public bool CompareToken(Move move)
     {
         return move._boardToken == _boardToken;
