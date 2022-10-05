@@ -4,6 +4,7 @@ public class MoveHistory
 {
     private readonly List<Move> _moves = new List<Move>();
     private const int WINNING_TOKEN_COUNT = 3;
+    private const int MINIMUM_NUMBER_OF_MOVES_FOR_WIN = 5;
 
     public PlaceTokenResult AddMove(Move move)
     {
@@ -25,27 +26,22 @@ public class MoveHistory
 
     private GameWonStatus HasPlacedTokenWon(Move move)
     {
+        if (_moves.Count < MINIMUM_NUMBER_OF_MOVES_FOR_WIN)
+            return GameWonStatus.GameNotWon;
+
         var loopCounter = 0;
-        var isTokenMatching = true;
+        var primaryDiagonalCount = 0;
+        var secondaryDiagonalCount = 0;
 
-        while (loopCounter < WINNING_TOKEN_COUNT && isTokenMatching)
+        while (loopCounter < WINNING_TOKEN_COUNT)
         {
-            isTokenMatching = _moves.Any(x => x.CompareToken(move) &&
-                                              x.CompareCoordinates(new Coordinate(loopCounter, loopCounter)));
+            primaryDiagonalCount += _moves.Count(x => x.CompareToken(move) && x.CompareCoordinates(new Coordinate(loopCounter, loopCounter)));
+            secondaryDiagonalCount += _moves.Count(x => x.CompareToken(move) && x.CompareCoordinates(new Coordinate(loopCounter, (WINNING_TOKEN_COUNT -1) - loopCounter)));
             loopCounter++;
         }
-        if (isTokenMatching) return GameWonStatus.GameWon;
 
-        loopCounter = 0;
-        isTokenMatching = true;
-        while (loopCounter < WINNING_TOKEN_COUNT && isTokenMatching)
-        {
-            int invertCounter = WINNING_TOKEN_COUNT - loopCounter;
-            isTokenMatching = _moves.Any(x => x.CompareToken(move) &&
-                                              x.CompareCoordinates(new Coordinate(loopCounter, invertCounter - 1)));
-            loopCounter++;
-        }
-        if (isTokenMatching) return GameWonStatus.GameWon;
+        if (primaryDiagonalCount == WINNING_TOKEN_COUNT || secondaryDiagonalCount == WINNING_TOKEN_COUNT)
+            return GameWonStatus.GameWon;
 
         if (_moves.Count(x => x.CompareToken(move) && x.CompareRow(move)) == WINNING_TOKEN_COUNT)
             return GameWonStatus.GameWon;
