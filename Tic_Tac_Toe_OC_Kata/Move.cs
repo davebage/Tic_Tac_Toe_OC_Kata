@@ -1,6 +1,6 @@
 ﻿namespace Tic_Tac_Toe_OC_Kata;
 
-public class Move : IEquatable<Move>
+public class Move
 {
     private readonly BoardToken _boardToken;
 
@@ -34,14 +34,6 @@ public class Move : IEquatable<Move>
     public bool CompareToken(Move move)
     {
         return move._boardToken == _boardToken;
-    }
-
-    public bool Equals(Move? other)
-    {
-        if (other == null) return false;
-
-        return (other._boardToken == _boardToken && 
-                other._coordinate.Equals(_coordinate));
     }
 
     public bool CompareColumn(Move move)
